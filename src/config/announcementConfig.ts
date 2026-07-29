@@ -5,7 +5,7 @@ export const announcementConfig: AnnouncementConfig = {
 	title: "公告",
 
 	// 公告内容
-	content: "欢迎来到我的博客！这是一则示例公告。",
+	content: "欢迎来到我的博客！正在撰写《现代数学丛书》，欢迎交流指正。",
 
 	// 是否允许用户关闭公告
 	closable: true,
