@@ -104,10 +104,7 @@ export const fontConfig: FontSelectionConfig = {
 
 	// 本地字体子集化配置（构建时由 scripts/subset-fonts.ts 处理）
 	// key 为 fonts 数组中对应的 cssVariable，value 为子集化选项
-	subsetFonts: {
-		"--font-greatvibes": {
-			// 额外包含的字符
-			extraChars: "",
-		},
-	},
+	// 注意：只有被 selected 或上方区域字段引用的字体才会真正子集化，
+	// 未被引用的字体（如 --font-greatvibes）会被自动跳过，无需在此登记。
+	subsetFonts: {},
 };

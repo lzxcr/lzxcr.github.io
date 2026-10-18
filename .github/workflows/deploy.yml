@@ -31,11 +31,13 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 9.14.4
+          # 版本由 package.json 的 packageManager 字段决定（pnpm@11.17.0）。
+          # 不要在这里固定版本：此前固定 9.14.4 与锁文件不兼容，只能靠
+          # --no-frozen-lockfile 规避，会让 CI 安装结果不可复现。
           run_install: false
           
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
       
       - name: Build site
         run: pnpm run build

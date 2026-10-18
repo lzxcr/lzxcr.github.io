@@ -58,9 +58,7 @@ export const backgroundWallpaper: BackgroundWallpaperConfig = {
 			// 主页横幅主标题字体大小
 			titleSize: "3.5rem",
 			// 主页横幅副标题
-			subtitle: [
-				"PER·ASPERA·AD·ASTRA",
-			],
+			subtitle: ["PER·ASPERA·AD·ASTRA"],
 			// 主页横幅副标题字体大小
 			subtitleSize: "1.5rem",
 			typewriter: {

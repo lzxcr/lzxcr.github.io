@@ -57,7 +57,8 @@ Defined in `src/content.config.ts`:
 - `src/plugins/` — 15 custom remark/rehype plugins (Mermaid, PlantUML, KaTeX, GitHub cards, reading time, wiki links, etc.)
 - `src/i18n/` — translation keys in `i18nKey.ts`, language files in `languages/*.ts`, lookup via `translation.ts`
 - `src/utils/` — content sorting, crypto (encrypted posts), date formatting, image processing/LQIP, TOC generation
-- `src/pages/` — Astro file-based routing
+- `src/pages/` — Astro file-based routing for always-on routes
+- `src/feature-pages/` — toggleable feature routes (friends, sponsor, guestbook, bangumi, anime, gallery, dynamic). Not auto-registered: `astro.config.mjs`'s `featurePages` integration injects each one only when the matching `siteConfig.pages.*` flag is true, so disabled features emit no page and no redirect stub
 - `scripts/` — build-time utilities (`generate-lqips.ts`, `subset-fonts.ts`, `new-post.js`, `new-dynamic.js`)
 
 ### Path Aliases (tsconfig.json)

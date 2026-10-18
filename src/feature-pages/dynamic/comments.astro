@@ -1,16 +1,6 @@
 ---
 import Comment from "@/components/comment/index.astro";
-import { commentConfig, dynamicConfig, siteConfig } from "@/config";
 import Layout from "@/layouts/Layout.astro";
-
-if (
-	!siteConfig.pages.dynamic ||
-	dynamicConfig.showComment === false ||
-	!commentConfig.type ||
-	commentConfig.type === "none"
-) {
-	return Astro.redirect("/404/");
-}
 ---
 
 <Layout title="">

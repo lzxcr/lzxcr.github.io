@@ -6,7 +6,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { slug } from "github-slugger";
+import GithubSlugger, { slug } from "github-slugger";
 import matter from "gray-matter";
 import { getApiUrlList, processCoverImageSync } from "../utils/image-utils";
 
@@ -20,6 +20,11 @@ const SKIPPED_NODE_TYPES = new Set([
 	"mdxJsxFlowElement",
 	"mdxJsxTextElement",
 ]);
+
+/**
+ * 普通 Markdown 链接中指向 Markdown 文件的写法（Obsidian 里点击文件名生成的就是这种）。
+ */
+const MARKDOWN_LINK_TARGET = /\.(?:md|mdx|markdown)$/i;
 
 const frontmatterCache = new Map();
 
@@ -44,6 +49,19 @@ function normalizeContentPath(value) {
 	return withoutPrefix.length > 0 ? withoutPrefix.join("/") : "";
 }
 
+/**
+ * 把单个路径片段转成 Astro 实际使用的 URL 片段。
+ *
+ * 不能直接拿文件名拼 URL：Astro 的 glob loader 会把 entry.id 归一化
+ * （`Metamathematics` → `metamathematics`、`My Test Post` → `my-test-post`），
+ * 而 `github-slugger` 正是它内部使用的实现——注意它保留下划线（`a_b` 保持
+ * `a_b` 而非 `a-b`）。每段都要新建实例，否则 slugger 会为了去重给重复段
+ * 追加 `-1`。
+ */
+function slugifyPathSegment(segment) {
+	return new GithubSlugger().slug(segment);
+}
+
 function createPostUrl(contentPath) {
 	const segments = contentPath.split("/");
 
@@ -52,7 +70,7 @@ function createPostUrl(contentPath) {
 	}
 
 	const encodedPath = segments
-		.map((segment) => encodeURIComponent(segment))
+		.map((segment) => encodeURIComponent(slugifyPathSegment(segment)))
 		.join("/");
 
 	return `/posts/${encodedPath ? `${encodedPath}/` : ""}`;
@@ -540,6 +558,65 @@ function tryCreateCardFromParagraph(node, context) {
 	return createWikiLinkCard(parsed, context);
 }
 
+/**
+ * 把「指向另一篇 Markdown 文件」的普通链接改写成该文章的站内 URL。
+ *
+ * Obsidian 里按住 Ctrl 点击文件名会生成 `[标题](./其他文章.md)` 这种相对链接，
+ * 直接交给 Astro 会被当成静态文件请求，产出 `/posts/series/其他文章.md` 这样的
+ * 404 死链。这里在构建期把它解析成真实的文章 URL。
+ *
+ * 只处理确实存在于 posts 目录内的 .md/.mdx 链接，其余（外链、图片、
+ * 指向 public/ 的静态文件）一律原样保留。解析不到时也原样保留，
+ * 避免把拼错的路径悄悄改成别的页面。
+ */
+function tryRewriteMarkdownLink(node, context) {
+	if (node.type !== "link" || typeof node.url !== "string") {
+		return null;
+	}
+	if (!MARKDOWN_LINK_TARGET.test(node.url.split("#")[0].split("?")[0])) {
+		return null;
+	}
+
+	const [rawTarget, fragment] = node.url.split("#");
+	if (!context.currentDir) {
+		return null;
+	}
+
+	// 用 currentDir 做基准还原相对路径，再定位到文章文件
+	const absolutePath = path.resolve(
+		context.currentDir,
+		decodeURIComponent(rawTarget),
+	);
+	const relativePath = path.relative(POSTS_DIR, absolutePath);
+	if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+		// 越出 posts 目录（例如指向 public/ 下的 .md），不是文章
+		return null;
+	}
+
+	const contentPath = normalizeContentPath(relativePath.replaceAll("\\", "/"));
+	if (!contentPath) {
+		return null;
+	}
+
+	// 确认目标确实是文章。readPostMeta 会回退到裸文件名匹配，
+	// 因此 `./Metamathematics.md` 与 `[[Metamathematics]]` 解析结果一致。
+	const meta = readPostMeta(contentPath);
+	if (!meta) {
+		return null;
+	}
+	// 文件必须真实存在，避免把不存在的路径解析成同名文章的链接
+	if (!readMetaFile(meta.filePath)) {
+		return null;
+	}
+
+	// fragment 有可能写成原始标题而非 slug，统一过一遍 slug()
+	const url = `${createPostUrl(toPostId(meta))}${
+		fragment ? `#${slug(decodeURIComponent(fragment))}` : ""
+	}`;
+
+	return url === node.url ? null : { ...node, url };
+}
+
 function transformNode(node, context) {
 	if (SKIPPED_NODE_TYPES.has(node.type) || !Array.isArray(node.children)) {
 		return;
@@ -551,6 +628,12 @@ function transformNode(node, context) {
 		const card = tryCreateCardFromParagraph(child, context);
 		if (card) {
 			node.children[index] = card;
+			continue;
+		}
+
+		const rewritten = tryRewriteMarkdownLink(child, context);
+		if (rewritten) {
+			node.children[index] = rewritten;
 			continue;
 		}
 
@@ -586,6 +669,11 @@ function transformNode(node, context) {
  * accepted only when unique). URLs are always derived from the resolved
  * post's `entry.id` rather than from the link text, so a bare file name
  * still produces the post's real URL.
+ *
+ * Ordinary Markdown links that point at another post file
+ * (`[标题](./其他文章.md)`, what Obsidian inserts when you Ctrl-click a file
+ * name) are rewritten to the same canonical URL, so they do not turn into
+ * 404s against a nonexistent `.md` static asset.
  */
 export function remarkWikiLink() {
 	return (tree, file) => {

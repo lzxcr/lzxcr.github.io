@@ -10,11 +10,6 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import type { StandardizedAnime } from "@/types/anime";
 import { formatDateI18nWithTime } from "@/utils/date-utils";
 
-// 检查页面是否启用
-if (!siteConfig.pages.anime) {
-	return Astro.redirect("/404/");
-}
-
 // 获取构建时间
 const buildTime = formatDateI18nWithTime(new Date());
 

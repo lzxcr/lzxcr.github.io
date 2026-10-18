@@ -13,11 +13,6 @@ import { formatDateI18nWithTime } from "@/utils/date-utils";
 
 //参考：霞葉 https://kasuha.com/posts/fuwari-enhance-ep2/
 
-// 检查页面是否启用
-if (!siteConfig.pages.bangumi) {
-	return Astro.redirect("/404/");
-}
-
 // 获取构建时间
 const buildTime = formatDateI18nWithTime(new Date());
 

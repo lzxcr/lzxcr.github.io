@@ -1,6 +1,5 @@
 import {
 	type NavBarConfig,
-	type NavBarLink,
 	type NavBarSearchConfig,
 	NavBarSearchMethod,
 } from "../types/navBarConfig";

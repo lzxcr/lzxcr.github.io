@@ -9,10 +9,6 @@ import MainGridLayout from "@/layouts/MainGridLayout.astro";
 import "@/styles/dynamic.css";
 import { url } from "@/utils/url-utils";
 
-if (!siteConfig.pages.dynamic) {
-	return Astro.redirect("/404/");
-}
-
 const title = dynamicConfig.title || i18n(I18nKey.dynamic);
 const description =
 	dynamicConfig.description || i18n(I18nKey.dynamicDescription);

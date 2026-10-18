@@ -57,6 +57,49 @@ if (process.env.NODE_ENV === "development") {
 	setMaxListeners(20);
 }
 
+/**
+ * 按 siteConfig.pages 开关注入功能页面路由。
+ *
+ * 这些页面存放在 src/feature-pages/ 而非 src/pages/，因此不会自动注册路由：
+ * 关闭的功能既不生成页面，也不会留下指向 /404/ 的跳转存根；
+ * 开启对应开关后，页面会作为正常路由注入，并由导航栏自动展示。
+ */
+const featurePageRoutes = [
+	{ enabled: siteConfig.pages.friends, pattern: "/friends", file: "friends.astro" },
+	{ enabled: siteConfig.pages.sponsor, pattern: "/sponsor", file: "sponsor.astro" },
+	{ enabled: siteConfig.pages.guestbook, pattern: "/guestbook", file: "guestbook.astro" },
+	{ enabled: siteConfig.pages.bangumi, pattern: "/bangumi", file: "bangumi.astro" },
+	{ enabled: siteConfig.pages.anime, pattern: "/anime", file: "anime.astro" },
+	{ enabled: siteConfig.pages.gallery, pattern: "/gallery", file: "gallery/index.astro" },
+	{ enabled: siteConfig.pages.gallery, pattern: "/gallery/[album]", file: "gallery/[album].astro" },
+	{ enabled: siteConfig.pages.dynamic, pattern: "/dynamic", file: "dynamic/index.astro" },
+	{ enabled: siteConfig.pages.dynamic, pattern: "/dynamic/comments", file: "dynamic/comments.astro" },
+];
+
+/** @type {import("astro").AstroIntegration} */
+const featurePages = {
+	name: "feature-pages",
+	hooks: {
+		"astro:config:setup": ({ injectRoute, logger }) => {
+			const injected = featurePageRoutes.filter((route) => route.enabled);
+			for (const route of injected) {
+				injectRoute({
+					pattern: route.pattern,
+					entrypoint: new URL(
+						`./src/feature-pages/${route.file}`,
+						import.meta.url,
+					),
+				});
+			}
+			logger.info(
+				injected.length > 0
+					? `已启用 ${injected.length} 个功能页面路由：${injected.map((r) => r.pattern).join(", ")}`
+					: "所有功能页面均已关闭，未注入任何路由",
+			);
+		},
+	},
+};
+
 const adapter = process.env.CF_WORKERS
 	? cloudflare({
 			prerenderEnvironment: "node",
@@ -229,36 +272,21 @@ export default defineConfig({
 		}),
 		svelte(),
 		sitemap({
+			// 功能页面已由 featurePages 按开关条件注入，
+			// 关闭的功能不会生成路由，因此无需再逐项过滤 sitemap。
 			filter: (page) => {
-				// 根据页面开关配置过滤sitemap
-				const url = new URL(page);
-				const pathname = url.pathname;
-				if (pathname === "/dynamic/" && !siteConfig.pages.dynamic) {
-					return false;
-				}
-				if (pathname === "/friends/" && !siteConfig.pages.friends) {
-					return false;
-				}
-				if (pathname === "/sponsor/" && !siteConfig.pages.sponsor) {
-					return false;
-				}
-				if (pathname === "/guestbook/" && !siteConfig.pages.guestbook) {
-					return false;
-				}
-				if (pathname === "/bangumi/" && !siteConfig.pages.bangumi) {
-					return false;
-				}
-				if (pathname === "/gallery/" && !siteConfig.pages.gallery) {
-					return false;
-				}
-				if (pathname === "/anime/" && !siteConfig.pages.anime) {
-					return false;
-				}
-
-				return true;
+				const { pathname } = new URL(page);
+				// 兜底：动态页的子路由（如 /dynamic/comments/）同样不应被收录
+				return !featurePageRoutes.some(
+					(route) =>
+						!route.enabled &&
+						(pathname === `${route.pattern}/` ||
+							pathname.startsWith(`${route.pattern}/`)),
+				);
 			},
 		}),
 		mdx(),
+		featurePages,
 	],
 	markdown: {
 		processor: unified({
