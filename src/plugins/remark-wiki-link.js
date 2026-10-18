@@ -6,7 +6,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { slug } from "github-slugger";
+import GithubSlugger, { slug } from "github-slugger";
 import matter from "gray-matter";
 import { getApiUrlList, processCoverImageSync } from "../utils/image-utils";
 
@@ -44,6 +44,21 @@ function normalizeContentPath(value) {
 	return withoutPrefix.length > 0 ? withoutPrefix.join("/") : "";
 }
 
+/**
+ * 把路径片段转成 Astro 实际使用的路由片段。
+ *
+ * Astro 的 glob loader 会用 github-slugger 归一化 entry.id：
+ * `Metamathematics` -> `metamathematics`，`My Test Post` -> `my-test-post`，
+ * 而下划线原样保留（`a_b` 仍是 `a_b`）。不这样做，
+ * 从文件名推导出的 /posts/Metamathematics/ 会 404。
+ *
+ * 每个片段必须用独立的 slugger 实例：模块级默认实例是有状态的，
+ * 重复的输入会被追加 `-1`。
+ */
+function slugifyPathSegment(segment) {
+	return new GithubSlugger().slug(segment);
+}
+
 function createPostUrl(contentPath) {
 	const segments = contentPath.split("/");
 
@@ -52,7 +67,7 @@ function createPostUrl(contentPath) {
 	}
 
 	const encodedPath = segments
-		.map((segment) => encodeURIComponent(segment))
+		.map((segment) => encodeURIComponent(slugifyPathSegment(segment)))
 		.join("/");
 
 	return `/posts/${encodedPath ? `${encodedPath}/` : ""}`;
@@ -544,6 +559,63 @@ function tryCreateCardFromParagraph(node, context) {
 	return createWikiLinkCard(parsed, context);
 }
 
+/**
+ * 把 Obsidian 风格的相对 Markdown 链接改写成文章的真实路由。
+ *
+ * Obsidian 里 `[《元数学》](./Metamathematics.md)` 是标准的跨文章引用写法，
+ * 但 markdown 原样输出时会变成一个请求静态文件的 href（`./Metamathematics.md`），
+ * 在站点上必然 404。这里把它解析成对应的文章 URL，让内容保持 Obsidian 兼容。
+ *
+ * 只处理指向 `src/content/posts/` 内真实存在的 Markdown 文件；
+ * 逃出该目录的目标（例如指向 public 的资源）一律不动。
+ */
+function tryRewriteMarkdownLink(node, context) {
+	if (node.type !== "link" || typeof node.url !== "string") {
+		return null;
+	}
+
+	const [rawTarget, ...rest] = node.url.split("#");
+	const [rawPath, query] = rawTarget.split("?");
+	if (!MARKDOWN_EXTENSION.test(rawPath) || !context.currentDir) {
+		return null;
+	}
+
+	let absolutePath;
+	try {
+		absolutePath = path.resolve(
+			context.currentDir,
+			decodeURIComponent(rawPath),
+		);
+	} catch {
+		return null;
+	}
+
+	const relative = path.relative(POSTS_DIR, absolutePath);
+	if (relative.startsWith("..") || path.isAbsolute(relative)) {
+		return null;
+	}
+
+	const contentPath = normalizeContentPath(relative);
+	if (!contentPath) {
+		return null;
+	}
+
+	const meta = readPostMeta(contentPath);
+	// 再确认一次文件真的存在：readPostMeta 有按文件名兜底的逻辑，
+	// 不校验的话，一个不存在的路径会被悄悄指向同名的其他文章
+	if (!meta || !readMetaFile(meta.filePath)) {
+		return null;
+	}
+
+	const fragment = rest.length > 0 ? decodeURIComponent(rest.join("#")) : "";
+	const anchor = fragment ? `#${slug(fragment)}` : "";
+	const url = `${createPostUrl(toPostId(meta))}${anchor}`;
+
+	return url === node.url
+		? null
+		: { ...node, url: url + (query ? `?${query}` : "") };
+}
+
 function transformNode(node, context) {
 	if (SKIPPED_NODE_TYPES.has(node.type) || !Array.isArray(node.children)) {
 		return;
@@ -555,6 +627,12 @@ function transformNode(node, context) {
 		const card = tryCreateCardFromParagraph(child, context);
 		if (card) {
 			node.children[index] = card;
+			continue;
+		}
+
+		const rewrittenLink = tryRewriteMarkdownLink(child, context);
+		if (rewrittenLink) {
+			node.children[index] = rewrittenLink;
 			continue;
 		}
 
