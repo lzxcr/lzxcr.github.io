@@ -17,9 +17,9 @@ jobs:
   check:
     strategy:
       matrix:
-        node: [ 22, 23 ]
+        node: [ 22, 24 ]
     runs-on: ubuntu-latest
-    name: Astro Check for Node.js ${{ matrix.node }}
+    name: Check for Node.js ${{ matrix.node }}
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
@@ -37,15 +37,21 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Run Biome
+        run: pnpm exec biome ci ./src ./scripts
+
+      - name: Type check
+        run: pnpm run type-check
+
       - name: Run Astro Check
-        run: pnpm astro check
+        run: pnpm run check
 
   build:
     strategy:
       matrix:
-        node: [ 22, 23 ]
+        node: [ 22, 24 ]
     runs-on: ubuntu-latest
-    name: Astro Build for Node.js ${{ matrix.node }} # Corrected job name
+    name: Build for Node.js ${{ matrix.node }}
     steps:
       - name: Setup Node.js
         uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
@@ -63,5 +69,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run Astro Build
-        run: pnpm astro build
+      # 使用完整构建流程（LQIPs → Astro → 字体子集化 → 内联脚本压缩 → Pagefind），
+      # 而不是裸的 astro build，确保 CI 与本地 pnpm build 覆盖同样多的环节
+      - name: Run Build
+        run: pnpm run build

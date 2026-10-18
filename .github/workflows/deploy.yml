@@ -31,11 +31,11 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 11.22.0
+          # 版本由 package.json 的 packageManager 字段决定，避免两处版本漂移
           run_install: false
-          
+
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
       
       - name: Build site
         run: pnpm run build

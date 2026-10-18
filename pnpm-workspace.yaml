@@ -3,4 +3,5 @@ packages:
 
 allowBuilds:
   esbuild: true
+  swup: true
   workerd: true
