@@ -5,7 +5,9 @@ export const announcementConfig: AnnouncementConfig = {
 	title: "",
 
 	// 公告内容
-	content: "欢迎来到我的博客！这是一则示例公告。",
+	// 注意：公告组件默认在 sidebarConfig.ts 中关闭，需要先在那里把
+	// type: "announcement" 的 enable 打开，这段文案才会显示。
+	content: "《现代数学丛书》正在撰写中，进度见「系列」页面。",
 
 	// 是否允许用户关闭公告
 	closable: true,
