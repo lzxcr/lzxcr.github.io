@@ -1,10 +1,23 @@
 ---
 import Comment from "@/components/comment/index.astro";
+import { commentConfig, dynamicConfig } from "@/config";
 import Layout from "@/layouts/Layout.astro";
+import { url } from "@/utils/url-utils";
+import "@/styles/pages/dynamic-comments.css";
+
+// 评论未启用时本页没有意义。注意重定向目标是站点根路径而不是 /404/
+// —— 构建产物只有 dist/404.html，并不存在 /404/ 路由，跳过去只会得到死链。
+if (
+	dynamicConfig.showComment === false ||
+	!commentConfig.type ||
+	commentConfig.type === "none"
+) {
+	return Astro.redirect(url("/"));
+}
 ---
 
 <Layout title="">
-	<main class="dynamic-comment-embed">
+	<main class="page-comment-embed">
 		<Comment customPath="/dynamic/" />
 	</main>
 </Layout>
@@ -34,16 +47,3 @@ import Layout from "@/layouts/Layout.astro";
 	window.addEventListener("load", reportHeight);
 </script>
 
-<style is:global>
-	html:has(.dynamic-comment-embed),
-	body:has(.dynamic-comment-embed) {
-		overflow: hidden;
-		background: transparent !important;
-	}
-
-	.dynamic-comment-embed #post-comments {
-		margin: 0;
-		border: 0;
-		box-shadow: none;
-	}
-</style>

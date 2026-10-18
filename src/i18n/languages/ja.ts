@@ -13,12 +13,20 @@ export const ja: Translation = {
 	[Key.searchContent]: "内容",
 	[Key.searchViewMore]: "さらに結果を表示 ({count} 件)",
 	[Key.other]: "その他",
+
+	// ナビバーメニューグループ
+	[Key.navArticles]: "記事",
+	[Key.navSocial]: "ソーシャル",
+	[Key.navMine]: "マイ",
+	[Key.navAbout]: "について",
+	[Key.navLinks]: "リンク",
 	[Key.all]: "すべて",
 
 	[Key.tags]: "タグ",
 	[Key.categories]: "カテゴリ",
 	[Key.allCategories]: "すべてのカテゴリ",
 	[Key.allTags]: "すべてのタグ",
+	[Key.allSeries]: "すべてのシリーズ",
 	[Key.recentPosts]: "最近の投稿",
 	[Key.postList]: "投稿リスト",
 	[Key.tableOfContents]: "目次",
@@ -77,6 +85,22 @@ export const ja: Translation = {
 		"ここは私の友達です、お互いに訪問して交流することを歓迎します",
 	[Key.searchFriends]: "友達を検索...",
 	[Key.friendsEmpty]: "まだ友達がいません",
+	[Key.booknav]: "ブックマーク集",
+	[Key.booknavDescription]: "便利なサイトをカテゴリ別に集めました",
+	[Key.searchBooknav]: "ブックマークを検索...",
+	[Key.booknavEmpty]: "ブックマークがありません",
+
+	// プロジェクト展示ページ
+	[Key.projects]: "プロジェクト",
+	[Key.projectsDescription]: "私が開発したプロジェクトです",
+	[Key.projectDetails]: "詳細を見る",
+	[Key.projectBack]: "プロジェクト一覧へ戻る",
+	[Key.projectEmpty]: "プロジェクトはまだありません",
+	[Key.projectSearch]: "プロジェクトを検索",
+	[Key.projectStatusPlanning]: "計画中",
+	[Key.projectStatusDeveloping]: "開発中",
+	[Key.projectStatusPublished]: "公開済み",
+	[Key.projectStatusArchived]: "アーカイブ",
 	[Key.guestbook]: "ゲストブック",
 	[Key.guestbookDescription]:
 		"ここに足跡を残して、あなたの考えや提案を共有してください",
@@ -107,109 +131,20 @@ export const ja: Translation = {
 	[Key.updatedAt]: "更新日",
 	[Key.readTime]: "読了時間",
 	[Key.license]: "ライセンス",
-	[Key.bangumi]: "バングミ",
 
 	// バングミフィルターと状態文本
-	[Key.bangumiTitle]: "私のバングミ",
-	[Key.bangumiSubtitle]: "私の二次元の旅を記録する",
-	[Key.bangumiFilterAll]: "すべて",
-	[Key.bangumiFilterWatched]: "見た",
-	[Key.bangumiFilterWatching]: "視聴中",
-	[Key.bangumiFilterWish]: "見たい",
-	[Key.bangumiFilterOnHold]: "保留",
-	[Key.bangumiFilterDropped]: "中断",
-	[Key.bangumiFilterGamePlayed]: "プレイ済み",
-	[Key.bangumiFilterGamePlaying]: "プレイ中",
-	[Key.bangumiFilterGameWish]: "プレイしたい",
-	[Key.bangumiFilterBookRead]: "読んだ",
-	[Key.bangumiFilterBookReading]: "読んでいる",
-	[Key.bangumiFilterBookWish]: "読みたい",
-	[Key.bangumiFilterMusicListened]: "聴いた",
-	[Key.bangumiFilterMusicListening]: "聴いている",
-	[Key.bangumiFilterMusicWish]: "聴きたい",
-	[Key.bangumiStatusWish]: "見たい",
-	[Key.bangumiStatusWatched]: "見た",
-	[Key.bangumiStatusWatching]: "視聴中",
-	[Key.bangumiStatusOnHold]: "保留",
-	[Key.bangumiStatusDropped]: "中断",
-	[Key.bangumiStatusGameWish]: "プレイしたい",
-	[Key.bangumiStatusGamePlayed]: "プレイ済み",
-	[Key.bangumiStatusGamePlaying]: "プレイ中",
-	[Key.bangumiStatusBookWish]: "読みたい",
-	[Key.bangumiStatusBookRead]: "読んだ",
-	[Key.bangumiStatusBookReading]: "読んでいる",
-	[Key.bangumiStatusMusicWish]: "聴きたい",
-	[Key.bangumiStatusMusicListened]: "聴いた",
-	[Key.bangumiStatusMusicListening]: "聴いている",
-	[Key.bangumiStatusUnknown]: "不明",
-	[Key.bangumiNoData]: "データなし",
-	[Key.bangumiNoDataDescription]: "このカテゴリに項目がありません",
-	[Key.bangumiEmpty]: "データなし",
-	[Key.bangumiEmptyReason]:
-		"考えられる理由：ユーザー名が存在しない、ネットワーク接続の問題、またはAPI制限",
-	[Key.bangumiFetchError]: "Bangumi データ取得失敗",
-	[Key.bangumiFetchErrorDesc]:
-		"ビルド時に Bangumi API からのデータ取得に失敗しました。このページは一時的に利用できません。",
-	[Key.bangumiUsername]: "ユーザー名",
-	[Key.bangumiApi]: "API",
-	[Key.bangumiConfigTip]:
-		"ヒント：ページ設定で正しいBangumiユーザー名を設定してください",
-	[Key.bangumiPrevPage]: "前へ",
-	[Key.bangumiNextPage]: "次へ",
-	[Key.bangumiCurrentPage]: "ページ",
-	[Key.bangumiTotalPages]: "の",
-	[Key.bangumiPage]: "ページ",
 
 	// バングミカテゴリ
-	[Key.bangumiCategoryBook]: "本",
-	[Key.bangumiCategoryAnime]: "アニメ",
-	[Key.bangumiCategoryMusic]: "音楽",
-	[Key.bangumiCategoryGame]: "ゲーム",
-	[Key.bangumiCategoryReal]: "実写",
 
 	// バングミデータ更新
-	[Key.bangumiLastUpdated]: "データ更新",
-	[Key.bangumiUpdatedAt]: "ビルド時間",
-	[Key.bangumiDataStatic]: "静的データ",
 
-	// 追番（アニメ追跡）
-	[Key.anime]: "追番",
-	[Key.animeSubtitle]: "私のアニメ追跡リスト、Bilibili と TMDB からデータ取得",
-	[Key.animeTotal]: "合計",
-	[Key.animeAverageRating]: "平均評価",
-	[Key.animeSearch]: "アニメを検索...",
-	[Key.animeAllTypes]: "すべて",
-	[Key.animeTV]: "TV アニメ",
-	[Key.animeMovie]: "映画",
-	[Key.animeRatingDesc]: "評価が高い順",
-	[Key.animeRatingAsc]: "評価が低い順",
-	[Key.animeDateDesc]: "新しい順",
-	[Key.animeDateAsc]: "古い順",
-	[Key.animeNoResults]: "一致するアニメが見つかりません",
-	[Key.animeLastUpdated]: "データ更新",
-	[Key.animeSource]: "データソース",
-	[Key.animeEpStatus]: "進捗",
-	[Key.animeViewDetails]: "詳細を見る",
-	[Key.animeNotConfigured]: "アニメデータソースが未設定",
-	[Key.animeNotConfiguredDesc]:
-		"src/config/siteConfig.ts で Bilibili UID または TMDB API Key を設定してください",
-	[Key.animeBilibiliAvg]: "Bilibili 平均",
-	[Key.animeTmdbAvg]: "TMDB 平均",
-	[Key.animeDualSynced]: "デュアル同期済み",
-	[Key.animeNoOverview]: "あらすじなし",
-	[Key.animeClose]: "閉じる",
-	[Key.animeSynopsis]: "あらすじ",
-	[Key.animeWatchNow]: "今すぐ視聴",
-	[Key.animeViewTmdb]: "TMDB 詳細を見る",
-	[Key.animeAllWithCount]: "すべて ({count})",
-	[Key.animeTVWithCount]: "TV ({count})",
-	[Key.animeMovieWithCount]: "映画 ({count})",
-	[Key.animeTypeAnime]: "アニメ",
-	[Key.animeTypeMovie]: "映画",
-	[Key.animeTypeDocumentary]: "ドキュメンタリー",
-	[Key.animeTypeChinese]: "中国アニメ",
-	[Key.animeTypeDrama]: "ドラマ",
-	[Key.animeTypeConcert]: "コンサート",
+	// VNDB
+
+	// 追番 - Bilibili
+
+	// 追番 - 共通コンポーネント
+
+	// MyAnimeList
 
 	// ページネーション
 	[Key.paginationFirst]: "最初",
@@ -220,6 +155,7 @@ export const ja: Translation = {
 	[Key.paginationOf]: "ページ、全",
 	[Key.paginationTotal]: "ページ、合計",
 	[Key.paginationRecords]: "件",
+	[Key.paginationJump]: "指定ページへ移動",
 
 	// 404ページ
 	[Key.notFound]: "404",
@@ -249,6 +185,14 @@ export const ja: Translation = {
 	[Key.rssCopied]: "RSSリンクがクリップボードにコピーされました！",
 	[Key.rssCopyFailed]: "コピーに失敗しました。手動でリンクをコピーしてください",
 
+	// Atom ページ
+	[Key.atom]: "Atom フィード",
+	[Key.atomDescription]: "最新の更新を購読",
+	[Key.atomSubtitle]: "Atom で購読すると、最新の記事と更新をすぐに受け取れます",
+	[Key.atomLink]: "Atom リンク",
+	[Key.atomCopyToReader]: "Atom リーダーにリンクをコピー",
+	[Key.atomCopied]: "Atom リンクをクリップボードにコピーしました！",
+
 	// 最終更新時間カード
 	[Key.lastModifiedPrefix]: "最終更新日：",
 	[Key.lastModifiedOutdated]: "一部の内容が古くなっている可能性があります",
@@ -276,6 +220,13 @@ export const ja: Translation = {
 	[Key.noRelatedPosts]: "関連記事がありません",
 	[Key.noRandomPosts]: "ランダム記事がありません",
 
+	// 記事シリーズ
+	[Key.series]: "シリーズ",
+	[Key.seriesPartOf]: "シリーズの一部",
+	[Key.seriesPart]: "パート {n}",
+	[Key.seriesThisArticle]: "この記事",
+	[Key.noSeries]: "シリーズはありません",
+
 	// 暗号化
 	[Key.postEncrypted]: "この記事は暗号化されています",
 
@@ -283,6 +234,9 @@ export const ja: Translation = {
 	[Key.wallpaperMode]: "壁紙モード",
 	[Key.wallpaperBannerMode]: "バナー壁紙",
 	[Key.wallpaperFullscreenMode]: "フルスクリーン壁紙",
+	[Key.fullscreenLayout]: "フルスクリーンレイアウト",
+	[Key.fullscreenClassicLayout]: "クラシック",
+	[Key.fullscreenHeroLayout]: "ヒーロー",
 	[Key.wallpaperOverlayMode]: "透明",
 	[Key.wallpaperNoneMode]: "単色背景",
 
@@ -407,6 +361,7 @@ export const ja: Translation = {
 	[Key.galleryAlbums]: "冊のアルバム",
 	[Key.galleryNoAlbums]: "アルバムがありません",
 	[Key.galleryBackToAlbums]: "アルバム一覧に戻る",
+	[Key.galleryEnterAlbum]: "アルバムを見る",
 	[Key.searchAlbums]: "アルバムを検索...",
 
 	// パスワード保護
@@ -426,4 +381,11 @@ export const ja: Translation = {
 	[Key.videoPrev]: "前の動画",
 	[Key.videoNext]: "次の動画",
 	[Key.videoLoadError]: "動画の読み込みに失敗しました",
+
+	// 没入型リーディング
+	[Key.immersiveReading]: "没入型リーディング",
+	[Key.enterImmersiveReading]: "没入型リーディングに入る",
+	[Key.exitImmersiveReading]: "没入型リーディングを終了する",
+	[Key.tocExpand]: "目錄を開く",
+	[Key.tocCollapse]: "目錄をたたむ",
 };

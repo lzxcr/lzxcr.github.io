@@ -7,6 +7,7 @@ import type {
 	WALLPAPER_NONE,
 	WALLPAPER_OVERLAY,
 } from "../constants/constants";
+import type { ImmersiveReadingConfig } from "./immersiveReadingConfig";
 
 export type LIGHT_DARK_MODE =
 	| typeof LIGHT_MODE
@@ -24,6 +25,8 @@ export type Favicon = {
 	theme?: "light" | "dark";
 	sizes?: string;
 };
+
+export type NavbarMode = "static" | "fixed" | "dynamic";
 
 export type SiteConfig = {
 	title: string;
@@ -67,28 +70,38 @@ export type SiteConfig = {
 		logo?: {
 			type: "icon" | "image" | "url";
 			value: string; // icon名、本地图片路径或网络图片url
+			valueDark?: string; // 暗色模式下的图片，仅 image / url 类型生效，不设置则亮暗色共用 value
 			alt?: string; // 图片alt文本
 		};
 		title?: string; // 导航栏标题，如果不设置则使用 title
 		widthFull?: boolean; // 导航栏是否占满屏幕宽度
 		menuAlign?: "left" | "center"; // 导航菜单对齐方式（仅桌面端菜单）
 		followTheme?: boolean; // 导航栏图标和标题是否跟随主题色
-		stickyNavbar?: boolean; // 导航栏是否固定在顶部始终可见
+		// 导航栏模式：static（不固定，随页面滚动消失）/ fixed（固定在顶部常显）/ dynamic（固定在顶部，下滑隐藏、轻微上滑显示）
+		navbarMode?: NavbarMode;
+		/** @deprecated 由 navbarMode 取代；true→fixed，false→static */
+		stickyNavbar?: boolean;
 	};
 
 	// 页面开关配置
 	pages: {
+		booknav: boolean; // 书签导航页面开关
 		friends: boolean; // 友链页面开关
 		sponsor: boolean; // 打赏页面开关
 		guestbook: boolean; // 留言板页面开关
-		bangumi: boolean;
 		gallery: boolean; // 相册页面开关
-		anime: boolean; // 追番页面开关
 		dynamic: boolean; // 动态页面开关
+		projects: boolean; // 项目展示页开关
 	};
 
 	// 分类导航栏开关
 	categoryBar?: boolean;
+
+	// 分类导航栏按钮样式："pill"=胶囊，"rectangle"=矩形（配色同胶囊）
+	categoryStyle?: "pill" | "rectangle";
+
+	// 标签样式："pill"=主题色胶囊，"pill-gray"=中性灰胶囊，"rectangle"=主题色矩形
+	tagStyle?: "pill" | "pill-gray" | "rectangle";
 
 	// 归档页是否折叠非最新年份文章
 	foldArticle?: boolean;
@@ -97,10 +110,14 @@ export type SiteConfig = {
 	postListLayout: {
 		defaultMode: "list" | "grid"; // 默认布局模式：list=列表模式，grid=网格模式
 		mobileDefaultMode?: "list" | "grid"; // 移动端默认布局模式（视口宽度<780px时使用），不设置则跟随 defaultMode
+		// 列表模式下封面图的位置："right"=右侧（默认），"left"=左侧。网格模式封面固定在顶部，不受此项影响
+		coverPosition?: "left" | "right";
 		descriptionLines?: number; // 文章简介显示行数，设为 0 则不截断，默认 2
 		showStatsIcons?: boolean; // 文章卡片底部统计是否显示图标
 		// 标签显示位置："meta"=跟随元数据行（默认），"bottom"=卡片底部独立一行（将替换stats显示，二者只能选其一）
 		tagsPosition?: "meta" | "bottom";
+		// 底部标签样式："chip"=按钮样式，跟随 tagStyle 的胶囊/矩形（默认），"text"=无底色，只有文字
+		tagsBottomStyle?: "chip" | "text";
 		// PostMeta 元数据显示控制
 		meta?: {
 			showPublished?: boolean; // 是否显示发布日期
@@ -122,6 +139,8 @@ export type SiteConfig = {
 			masonry: boolean;
 			// 网格模式卡片最小宽度(px)，浏览器根据容器宽度自动计算列数，默认 320
 			columnWidth?: number;
+			// 网格模式封面是否撑满卡片贴边，false 则按卡片内边距内缩
+			coverFullWidth?: boolean;
 		};
 	};
 
@@ -136,38 +155,18 @@ export type SiteConfig = {
 		showLastModified: boolean;
 		// 文章过期阈值（天数），超过此天数才显示"上次编辑"卡片
 		outdatedThreshold?: number;
-		// 是否显示分享海报按钮
-		sharePoster?: boolean;
+		// 是否显示文章页的分享按钮
+		share: boolean;
+		// 是否显示上一篇/下一篇文章导航
+		postNavigation: boolean;
+		// 是否显示相关文章推荐
+		relatedPosts: boolean;
+		// 是否显示随机文章推荐
+		randomPosts: boolean;
 		// OpenGraph图片功能
 		generateOgImages: boolean;
-	};
-
-	// bangumi配置
-	bangumi?: {
-		userId?: string; // Bangumi用户ID
-		mode?: "static" | "dynamic"; // 数据模式：static=构建时获取，dynamic=客户端实时获取
-		apiUrl?: string; // Bangumi API 地址
-		subjectBaseUrl?: string; // 条目详情页地址
-		categoryOrder?: ("anime" | "game" | "book" | "music" | "real")[]; // 条目类型排序顺序
-		// 各分类的显示启用状态，未设置时默认启用
-		categories?: {
-			book?: boolean;
-			anime?: boolean;
-			music?: boolean;
-			game?: boolean;
-			real?: boolean;
-		};
-	};
-
-	// 追番配置（Bilibili + TMDB）
-	anime?: {
-		bilibili?: {
-			uid: string; // Bilibili 用户 UID
-		};
-		tmdb?: {
-			apiKey: string; // TMDB API Key
-			listId: string; // TMDB 列表 ID
-		};
+		// 沉浸阅读配置
+		immersiveReading?: ImmersiveReadingConfig;
 	};
 
 	// 分页配置
@@ -192,9 +191,19 @@ export type SiteConfig = {
 		/**
 		 * 为特定域名的图片添加 referrerpolicy="no-referrer" 属性
 		 * 开启后可解决指定域名图片加载时的 403 问题（如防盗链图片）
-		 * 示例：["i0.hdslb.com", "*.bilibili.com"] 支持通配符 *
+		 * 示例：["i0.hdslb.com", "*.example.com"] 支持通配符 *
 		 * 仅影响匹配域名的图片标签，不影响其他链接的 referrer 行为
 		 */
 		noReferrerDomains?: string[];
+	};
+
+	// 订阅 (RSS / Atom) 配置
+	feed?: {
+		/**
+		 * 订阅条目内容模式：
+		 * - "full": 包含文章正文全文（默认）
+		 * - "summary": 仅包含文章摘要/描述，不含正文
+		 */
+		contentMode?: "full" | "summary";
 	};
 };

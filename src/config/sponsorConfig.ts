@@ -21,6 +21,15 @@ export const sponsorConfig: SponsorConfig = {
 	showButtonInPost: true,
 
 	// 打赏方式列表
+	// 按下面的结构添加打赏方式即可：
+	// {
+	// 	name: "支付宝",
+	// 	icon: "fa7-brands:alipay",
+	// 	qrCode: "/assets/images/sponsor/alipay.png", // 收款码图片，需放在 public 目录下
+	// 	link: "",
+	// 	description: "使用 支付宝 扫码打赏",
+	// 	enabled: true,
+	// },
 	methods: [],
 
 	// 打赏者列表（可选）

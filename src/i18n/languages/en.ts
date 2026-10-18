@@ -13,12 +13,20 @@ export const en: Translation = {
 	[Key.searchContent]: "Content",
 	[Key.searchViewMore]: "View more results ({count} more)",
 	[Key.other]: "Other",
+
+	// Navbar menu groups
+	[Key.navArticles]: "Articles",
+	[Key.navSocial]: "Social",
+	[Key.navMine]: "Mine",
+	[Key.navAbout]: "About",
+	[Key.navLinks]: "Links",
 	[Key.all]: "All",
 
 	[Key.tags]: "Tags",
 	[Key.categories]: "Categories",
 	[Key.allCategories]: "All Categories",
 	[Key.allTags]: "All Tags",
+	[Key.allSeries]: "All Series",
 	[Key.recentPosts]: "Recent Posts",
 	[Key.postList]: "Post List",
 	[Key.tableOfContents]: "Table of Contents",
@@ -77,6 +85,23 @@ export const en: Translation = {
 		"Here are my friends, welcome to visit and communicate with each other",
 	[Key.searchFriends]: "Search friends...",
 	[Key.friendsEmpty]: "No friends yet.",
+	[Key.booknav]: "Bookmark Nav",
+	[Key.booknavDescription]:
+		"A curated collection of useful sites, organized by category.",
+	[Key.searchBooknav]: "Search bookmarks...",
+	[Key.booknavEmpty]: "No bookmarks yet.",
+
+	// Project showcase
+	[Key.projects]: "Projects",
+	[Key.projectsDescription]: "Here are the projects I've built",
+	[Key.projectDetails]: "View details",
+	[Key.projectBack]: "Back to projects",
+	[Key.projectEmpty]: "No projects yet",
+	[Key.projectSearch]: "Search projects",
+	[Key.projectStatusPlanning]: "Planning",
+	[Key.projectStatusDeveloping]: "In Development",
+	[Key.projectStatusPublished]: "Published",
+	[Key.projectStatusArchived]: "Archived",
 	[Key.guestbook]: "Guestbook",
 	[Key.guestbookDescription]:
 		"Welcome to leave your mark here, share your thoughts and suggestions",
@@ -107,109 +132,20 @@ export const en: Translation = {
 	[Key.updatedAt]: "Updated at",
 	[Key.readTime]: "Read time",
 	[Key.license]: "License",
-	[Key.bangumi]: "Bangumi",
 
 	// Bangumi Filter and Status Text
-	[Key.bangumiTitle]: "My Bangumi",
-	[Key.bangumiSubtitle]: "Record my ACG journey",
-	[Key.bangumiFilterAll]: "All",
-	[Key.bangumiFilterWatched]: "Watched",
-	[Key.bangumiFilterWatching]: "Watching",
-	[Key.bangumiFilterWish]: "Wish",
-	[Key.bangumiFilterOnHold]: "On Hold",
-	[Key.bangumiFilterDropped]: "Dropped",
-	[Key.bangumiFilterGamePlayed]: "Played",
-	[Key.bangumiFilterGamePlaying]: "Playing",
-	[Key.bangumiFilterGameWish]: "Wish to Play",
-	[Key.bangumiFilterBookRead]: "Read",
-	[Key.bangumiFilterBookReading]: "Reading",
-	[Key.bangumiFilterBookWish]: "Wish to Read",
-	[Key.bangumiFilterMusicListened]: "Listened",
-	[Key.bangumiFilterMusicListening]: "Listening",
-	[Key.bangumiFilterMusicWish]: "Wish to Listen",
-	[Key.bangumiStatusWish]: "Wish",
-	[Key.bangumiStatusWatched]: "Watched",
-	[Key.bangumiStatusWatching]: "Watching",
-	[Key.bangumiStatusOnHold]: "On Hold",
-	[Key.bangumiStatusDropped]: "Dropped",
-	[Key.bangumiStatusGameWish]: "Wish to Play",
-	[Key.bangumiStatusGamePlayed]: "Played",
-	[Key.bangumiStatusGamePlaying]: "Playing",
-	[Key.bangumiStatusBookWish]: "Wish to Read",
-	[Key.bangumiStatusBookRead]: "Read",
-	[Key.bangumiStatusBookReading]: "Reading",
-	[Key.bangumiStatusMusicWish]: "Wish to Listen",
-	[Key.bangumiStatusMusicListened]: "Listened",
-	[Key.bangumiStatusMusicListening]: "Listening",
-	[Key.bangumiStatusUnknown]: "Unknown",
-	[Key.bangumiNoData]: "No Data",
-	[Key.bangumiNoDataDescription]: "No items in this category",
-	[Key.bangumiEmpty]: "No Data",
-	[Key.bangumiEmptyReason]:
-		"Possible reasons: username does not exist, network connection issue, or API limit",
-	[Key.bangumiFetchError]: "Bangumi Data Fetch Failed",
-	[Key.bangumiFetchErrorDesc]:
-		"Failed to fetch data from Bangumi API during build. This page is temporarily unavailable.",
-	[Key.bangumiUsername]: "Username",
-	[Key.bangumiApi]: "API",
-	[Key.bangumiConfigTip]:
-		"Tip: Please set the correct Bangumi username in the page configuration",
-	[Key.bangumiPrevPage]: "Previous",
-	[Key.bangumiNextPage]: "Next",
-	[Key.bangumiCurrentPage]: "Page",
-	[Key.bangumiTotalPages]: "of",
-	[Key.bangumiPage]: "page",
 
 	// Bangumi Categories
-	[Key.bangumiCategoryBook]: "Book",
-	[Key.bangumiCategoryAnime]: "Anime",
-	[Key.bangumiCategoryMusic]: "Music",
-	[Key.bangumiCategoryGame]: "Game",
-	[Key.bangumiCategoryReal]: "Real",
 
 	// Bangumi Data Update
-	[Key.bangumiLastUpdated]: "Data updated at",
-	[Key.bangumiUpdatedAt]: "Build time",
-	[Key.bangumiDataStatic]: "Static data",
 
-	// Anime Tracking
-	[Key.anime]: "Anime",
-	[Key.animeSubtitle]: "My anime tracking list, data from Bilibili and TMDB",
-	[Key.animeTotal]: "Total",
-	[Key.animeAverageRating]: "Avg Rating",
-	[Key.animeSearch]: "Search anime...",
-	[Key.animeAllTypes]: "All",
-	[Key.animeTV]: "TV Anime",
-	[Key.animeMovie]: "Movie",
-	[Key.animeRatingDesc]: "Highest Rating",
-	[Key.animeRatingAsc]: "Lowest Rating",
-	[Key.animeDateDesc]: "Newest",
-	[Key.animeDateAsc]: "Oldest",
-	[Key.animeNoResults]: "No matching anime found",
-	[Key.animeLastUpdated]: "Data updated at",
-	[Key.animeSource]: "Source",
-	[Key.animeEpStatus]: "Progress",
-	[Key.animeViewDetails]: "View Details",
-	[Key.animeNotConfigured]: "Anime data source not configured",
-	[Key.animeNotConfiguredDesc]:
-		"Please configure Bilibili UID or TMDB API Key in src/config/siteConfig.ts",
-	[Key.animeBilibiliAvg]: "Bilibili Avg",
-	[Key.animeTmdbAvg]: "TMDB Avg",
-	[Key.animeDualSynced]: "Dual Synced",
-	[Key.animeNoOverview]: "No synopsis available",
-	[Key.animeClose]: "Close",
-	[Key.animeSynopsis]: "Synopsis",
-	[Key.animeWatchNow]: "Watch Now",
-	[Key.animeViewTmdb]: "View TMDB Details",
-	[Key.animeAllWithCount]: "All ({count})",
-	[Key.animeTVWithCount]: "TV ({count})",
-	[Key.animeMovieWithCount]: "Movie ({count})",
-	[Key.animeTypeAnime]: "Anime",
-	[Key.animeTypeMovie]: "Movie",
-	[Key.animeTypeDocumentary]: "Documentary",
-	[Key.animeTypeChinese]: "Chinese Animation",
-	[Key.animeTypeDrama]: "Drama",
-	[Key.animeTypeConcert]: "Concert",
+	// VNDB
+
+	// Anime Tracking - Bilibili
+
+	// Anime Tracking - Shared components
+
+	// MyAnimeList
 
 	// Pagination
 	[Key.paginationFirst]: "First",
@@ -220,6 +156,7 @@ export const en: Translation = {
 	[Key.paginationOf]: "of",
 	[Key.paginationTotal]: ", Total",
 	[Key.paginationRecords]: " records",
+	[Key.paginationJump]: "Jump to page",
 
 	// 404 Page
 	[Key.notFound]: "404",
@@ -250,6 +187,15 @@ export const en: Translation = {
 	[Key.rssCopied]: "RSS link copied to clipboard!",
 	[Key.rssCopyFailed]: "Copy failed, please copy the link manually",
 
+	// Atom Page
+	[Key.atom]: "Atom Feed",
+	[Key.atomDescription]: "Subscribe to get latest updates",
+	[Key.atomSubtitle]:
+		"Subscribe via Atom to get the latest articles and updates immediately",
+	[Key.atomLink]: "Atom Link",
+	[Key.atomCopyToReader]: "Copy link to your Atom reader",
+	[Key.atomCopied]: "Atom link copied to clipboard!",
+
 	// Last Modified Time Card
 	[Key.lastModifiedPrefix]: "Last updated on ",
 	[Key.lastModifiedOutdated]: "Some content may be outdated",
@@ -277,6 +223,13 @@ export const en: Translation = {
 	[Key.noRelatedPosts]: "No related posts",
 	[Key.noRandomPosts]: "No random posts",
 
+	// Article Series
+	[Key.series]: "Series",
+	[Key.seriesPartOf]: "Part of series",
+	[Key.seriesPart]: "Part {n}",
+	[Key.seriesThisArticle]: "This article",
+	[Key.noSeries]: "No series yet",
+
 	// Encrypted
 	[Key.postEncrypted]: "This post is encrypted",
 
@@ -284,6 +237,9 @@ export const en: Translation = {
 	[Key.wallpaperMode]: "Wallpaper Mode",
 	[Key.wallpaperBannerMode]: "Banner Wallpaper",
 	[Key.wallpaperFullscreenMode]: "Fullscreen Wallpaper",
+	[Key.fullscreenLayout]: "Fullscreen Layout",
+	[Key.fullscreenClassicLayout]: "Classic",
+	[Key.fullscreenHeroLayout]: "Hero",
 	[Key.wallpaperOverlayMode]: "Overlay Wallpaper",
 	[Key.wallpaperNoneMode]: "None Wallpaper",
 
@@ -408,6 +364,7 @@ export const en: Translation = {
 	[Key.galleryAlbums]: "albums",
 	[Key.galleryNoAlbums]: "No albums yet",
 	[Key.galleryBackToAlbums]: "Back to albums",
+	[Key.galleryEnterAlbum]: "Enter album",
 	[Key.searchAlbums]: "Search albums...",
 
 	// Password Protection
@@ -427,4 +384,11 @@ export const en: Translation = {
 	[Key.videoPrev]: "Previous video",
 	[Key.videoNext]: "Next video",
 	[Key.videoLoadError]: "Video failed to load",
+
+	// Immersive Reading
+	[Key.immersiveReading]: "Immersive Reading",
+	[Key.enterImmersiveReading]: "Enter Immersive Reading",
+	[Key.exitImmersiveReading]: "Exit Immersive Reading",
+	[Key.tocExpand]: "Expand directory",
+	[Key.tocCollapse]: "Collapse directory",
 };

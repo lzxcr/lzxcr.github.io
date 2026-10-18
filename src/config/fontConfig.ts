@@ -31,7 +31,9 @@ export const fontsList: FontDefinition[] = [
 		name: "Zen Maru Gothic",
 		cssVariable: "--font-zen-maru-gothic",
 		provider: "fontsource",
-		weights: ["300", "400", "500", "600", "700"],
+		// 该字体在 Fontsource 上只提供 300/400/500/700/900，声明 600 会触发
+		// Astro Fonts 的 "does not support the following weights: 600" 警告
+		weights: ["300", "400", "500", "700", "900"],
 		styles: ["normal"],
 		subsets: ["latin", "cyrillic"],
 		fallbacks: ["sans-serif"],
@@ -63,24 +65,20 @@ export const fontsList: FontDefinition[] = [
 			"monospace",
 		],
 	},
-	// ─── 本地字体示例 ───
+	// ─── 本地字体 ───
 	// 使用步骤：
 	// 1. 将 TTF/OTF/WOFF2 字体文件放在 public/assets/fonts/ 目录下
-	// 2. 参考下方配置填写正确的字体信息
+	// 2. 在下方按下列结构添加字体定义，填写正确的字体信息
 	// 3. 在 fontConfig.selected 或区域字段中引用 cssVariable
-	{
-		name: "GreatVibes Regular 2",
-		cssVariable: "--font-greatvibes",
-		provider: "local",
-		options: {
-			variants: [
-				{
-					src: ["./public/assets/fonts/GreatVibes-Regular-2.otf"],
-				},
-			],
-		},
-		fallbacks: ["sans-serif"],
-	},
+	// 4. 如需子集化，在 fontConfig.subsetFonts 中登记该 cssVariable
+	//
+	// {
+	// 	name: "字体名称",
+	// 	cssVariable: "--font-custom",
+	// 	provider: "local",
+	// 	options: { variants: [{ src: ["./public/assets/fonts/YourFont.otf"] }] },
+	// 	fallbacks: ["sans-serif"],
+	// },
 ];
 
 // ─── 字体选择与区域覆盖 ─────────────────────────────────────
@@ -104,7 +102,5 @@ export const fontConfig: FontSelectionConfig = {
 
 	// 本地字体子集化配置（构建时由 scripts/subset-fonts.ts 处理）
 	// key 为 fonts 数组中对应的 cssVariable，value 为子集化选项
-	// 注意：只有被 selected 或上方区域字段引用的字体才会真正子集化，
-	// 未被引用的字体（如 --font-greatvibes）会被自动跳过，无需在此登记。
 	subsetFonts: {},
 };

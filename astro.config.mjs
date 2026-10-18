@@ -27,6 +27,8 @@ import remarkDirective from "remark-directive"; /* Handle directives */
 import remarkMath from "remark-math";
 import remarkSectionize from "remark-sectionize";
 import {
+	commentConfig,
+	dynamicConfig,
 	expressiveCodeConfig,
 	fontConfig,
 	fontsList,
@@ -60,20 +62,21 @@ if (process.env.NODE_ENV === "development") {
 /**
  * 按 siteConfig.pages 开关注入功能页面路由。
  *
- * 这些页面存放在 src/feature-pages/ 而非 src/pages/，因此不会自动注册路由：
- * 关闭的功能既不生成页面，也不会留下指向 /404/ 的跳转存根；
- * 开启对应开关后，页面会作为正常路由注入，并由导航栏自动展示。
+ * 这些页面存放在 src/feature-pages/ 而非 src/pages/，因此不会被 Astro 自动注册：
+ * 关闭的功能既不会生成页面，也不会留下指向不存在地址的跳转存根；
+ * 打开对应开关后，页面才会作为正常路由注入，并由导航栏自动展示。
  */
 const featurePageRoutes = [
 	{ enabled: siteConfig.pages.friends, pattern: "/friends", file: "friends.astro" },
-	{ enabled: siteConfig.pages.sponsor, pattern: "/sponsor", file: "sponsor.astro" },
 	{ enabled: siteConfig.pages.guestbook, pattern: "/guestbook", file: "guestbook.astro" },
-	{ enabled: siteConfig.pages.bangumi, pattern: "/bangumi", file: "bangumi.astro" },
-	{ enabled: siteConfig.pages.anime, pattern: "/anime", file: "anime.astro" },
-	{ enabled: siteConfig.pages.gallery, pattern: "/gallery", file: "gallery/index.astro" },
-	{ enabled: siteConfig.pages.gallery, pattern: "/gallery/[album]", file: "gallery/[album].astro" },
+	{ enabled: siteConfig.pages.sponsor, pattern: "/sponsor", file: "sponsor.astro" },
 	{ enabled: siteConfig.pages.dynamic, pattern: "/dynamic", file: "dynamic/index.astro" },
 	{ enabled: siteConfig.pages.dynamic, pattern: "/dynamic/comments", file: "dynamic/comments.astro" },
+	{ enabled: siteConfig.pages.gallery, pattern: "/gallery", file: "gallery/index.astro" },
+	{ enabled: siteConfig.pages.gallery, pattern: "/gallery/[album]", file: "gallery/[album].astro" },
+	{ enabled: siteConfig.pages.projects, pattern: "/projects", file: "projects/index.astro" },
+	{ enabled: siteConfig.pages.projects, pattern: "/projects/[slug]", file: "projects/[slug].astro" },
+	{ enabled: siteConfig.pages.booknav, pattern: "/booknav", file: "booknav.astro" },
 ];
 
 /** @type {import("astro").AstroIntegration} */
@@ -173,7 +176,10 @@ export default defineConfig({
 			],
 			smoothScrolling: false,
 			cache: true,
-			preload: true,
+			preload: {
+				hover: true,
+				visible: true,
+			},
 			accessibility: true,
 			updateHead: true,
 			updateBodyClass: false,
@@ -249,7 +255,7 @@ export default defineConfig({
 				borderRadius: "0.75rem",
 				codeFontSize: "0.875rem",
 				codeFontFamily:
-					"var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+					"var(--font-code, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace)",
 				codeLineHeight: "1.5rem",
 				frames: {},
 				textMarkers: {
@@ -267,22 +273,29 @@ export default defineConfig({
 				},
 			},
 			frames: {
+				// 保留原生复制按钮，外观由 src/styles/expressive-code.css 覆盖成主题风格
 				showCopyToClipboardButton: true,
 			},
 		}),
 		svelte(),
 		sitemap({
-			// 功能页面已由 featurePages 按开关条件注入，
-			// 关闭的功能不会生成路由，因此无需再逐项过滤 sitemap。
 			filter: (page) => {
 				const { pathname } = new URL(page);
-				// 兜底：动态页的子路由（如 /dynamic/comments/）同样不应被收录
-				return !featurePageRoutes.some(
-					(route) =>
-						!route.enabled &&
-						(pathname === `${route.pattern}/` ||
-							pathname.startsWith(`${route.pattern}/`)),
-				);
+				// 关闭的功能页面不会被注入（见 featurePages），这里仅兜底剔除
+				// 评论未启用时动态页的评论嵌入页，以及未注入页面的子路径。
+				if (
+					pathname === "/dynamic/comments/" &&
+					(dynamicConfig.showComment === false ||
+						!commentConfig.type ||
+						commentConfig.type === "none")
+				) {
+					return false;
+				}
+				return !featurePageRoutes.some((route) => {
+					if (route.enabled) return false;
+					const base = route.pattern.replace(/\/\[[^\]]+\]$/, "");
+					return pathname === `${base}/` || pathname.startsWith(`${base}/`);
+				});
 			},
 		}),
 		mdx(),

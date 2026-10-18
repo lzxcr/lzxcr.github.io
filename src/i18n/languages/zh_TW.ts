@@ -13,12 +13,20 @@ export const zh_TW: Translation = {
 	[Key.searchContent]: "內容",
 	[Key.searchViewMore]: "查看更多結果 ({count} 個更多)",
 	[Key.other]: "其他",
+
+	// 導覽列選單分組
+	[Key.navArticles]: "文章",
+	[Key.navSocial]: "社交",
+	[Key.navMine]: "我的",
+	[Key.navAbout]: "關於",
+	[Key.navLinks]: "連結",
 	[Key.all]: "全部",
 
 	[Key.tags]: "標籤",
 	[Key.categories]: "分類",
 	[Key.allCategories]: "全部分類",
 	[Key.allTags]: "全部標籤",
+	[Key.allSeries]: "全部系列",
 	[Key.recentPosts]: "最新文章",
 	[Key.postList]: "文章列表",
 	[Key.tableOfContents]: "文章目錄",
@@ -76,6 +84,22 @@ export const zh_TW: Translation = {
 	[Key.friendsDescription]: "這裡是我的朋友們，歡迎互相訪問交流",
 	[Key.searchFriends]: "搜尋友鏈...",
 	[Key.friendsEmpty]: "暫無友情連結",
+	[Key.booknav]: "書籤導航",
+	[Key.booknavDescription]: "收藏一些好用的網站，按分類整理",
+	[Key.searchBooknav]: "搜尋書籤...",
+	[Key.booknavEmpty]: "暫無書籤",
+
+	// 專案展示頁
+	[Key.projects]: "專案",
+	[Key.projectsDescription]: "這裡展示我開發過的專案",
+	[Key.projectDetails]: "查看詳情",
+	[Key.projectBack]: "返回專案列表",
+	[Key.projectEmpty]: "暫無專案",
+	[Key.projectSearch]: "搜尋專案",
+	[Key.projectStatusPlanning]: "規劃中",
+	[Key.projectStatusDeveloping]: "開發中",
+	[Key.projectStatusPublished]: "已發佈",
+	[Key.projectStatusArchived]: "已封存",
 	[Key.guestbook]: "留言",
 	[Key.guestbookDescription]: "歡迎在這裡留下你的足跡，分享你的想法和建議",
 	[Key.untitled]: "無標題",
@@ -105,109 +129,22 @@ export const zh_TW: Translation = {
 	[Key.updatedAt]: "更新於",
 	[Key.readTime]: "閱讀時長",
 	[Key.license]: "許可協議",
-	[Key.bangumi]: "番組計劃",
 
 	// 番組計劃
-	[Key.bangumiTitle]: "我的番組計劃",
-	[Key.bangumiSubtitle]: "記錄我的二次元之旅",
 
 	// 番組計劃篩選和狀態文本
-	[Key.bangumiFilterAll]: "全部",
-	[Key.bangumiFilterWatched]: "看過",
-	[Key.bangumiFilterWatching]: "在看",
-	[Key.bangumiFilterWish]: "想看",
-	[Key.bangumiFilterOnHold]: "擱置",
-	[Key.bangumiFilterDropped]: "拋棄",
-	[Key.bangumiFilterGamePlayed]: "玩過",
-	[Key.bangumiFilterGamePlaying]: "在玩",
-	[Key.bangumiFilterGameWish]: "想玩",
-	[Key.bangumiFilterBookRead]: "讀過",
-	[Key.bangumiFilterBookReading]: "在讀",
-	[Key.bangumiFilterBookWish]: "想讀",
-	[Key.bangumiFilterMusicListened]: "聽過",
-	[Key.bangumiFilterMusicListening]: "在聽",
-	[Key.bangumiFilterMusicWish]: "想聽",
-	[Key.bangumiStatusWish]: "想看",
-	[Key.bangumiStatusWatched]: "看過",
-	[Key.bangumiStatusWatching]: "在看",
-	[Key.bangumiStatusOnHold]: "擱置",
-	[Key.bangumiStatusDropped]: "拋棄",
-	[Key.bangumiStatusGameWish]: "想玩",
-	[Key.bangumiStatusGamePlayed]: "玩過",
-	[Key.bangumiStatusGamePlaying]: "在玩",
-	[Key.bangumiStatusBookWish]: "想讀",
-	[Key.bangumiStatusBookRead]: "讀過",
-	[Key.bangumiStatusBookReading]: "在讀",
-	[Key.bangumiStatusMusicWish]: "想聽",
-	[Key.bangumiStatusMusicListened]: "聽過",
-	[Key.bangumiStatusMusicListening]: "在聽",
-	[Key.bangumiStatusUnknown]: "未知",
-	[Key.bangumiNoData]: "暫無數據",
-	[Key.bangumiNoDataDescription]: "該分類下還沒有任何條目",
-	[Key.bangumiEmpty]: "暫無數據",
-	[Key.bangumiEmptyReason]: "可能的原因：用戶名不存在、網絡連接問題或API限制",
-	[Key.bangumiFetchError]: "Bangumi 資料拉取失敗",
-	[Key.bangumiFetchErrorDesc]:
-		"構建時從 Bangumi API 獲取資料失敗，該頁面內容暫不可用。",
-	[Key.bangumiUsername]: "用戶名",
-	[Key.bangumiApi]: "API",
-	[Key.bangumiConfigTip]: "提示：請在頁面配置中設置正確的Bangumi用戶名",
-	[Key.bangumiPrevPage]: "上一頁",
-	[Key.bangumiNextPage]: "下一頁",
-	[Key.bangumiCurrentPage]: "第",
-	[Key.bangumiTotalPages]: "頁，共",
-	[Key.bangumiPage]: "頁",
 
 	// 番組分類
-	[Key.bangumiCategoryBook]: "書籍",
-	[Key.bangumiCategoryAnime]: "動畫",
-	[Key.bangumiCategoryMusic]: "音樂",
-	[Key.bangumiCategoryGame]: "遊戲",
-	[Key.bangumiCategoryReal]: "三次元",
 
 	// 番組數據更新
-	[Key.bangumiLastUpdated]: "數據更新於",
-	[Key.bangumiUpdatedAt]: "構建時間",
-	[Key.bangumiDataStatic]: "靜態數據",
 
-	// 追番
-	[Key.anime]: "追番",
-	[Key.animeSubtitle]: "我的追番列表，數據來自 Bilibili 和 TMDB",
-	[Key.animeTotal]: "總追番",
-	[Key.animeAverageRating]: "平均評分",
-	[Key.animeSearch]: "搜尋番劇...",
-	[Key.animeAllTypes]: "全部",
-	[Key.animeTV]: "TV 動畫",
-	[Key.animeMovie]: "電影",
-	[Key.animeRatingDesc]: "評分最高",
-	[Key.animeRatingAsc]: "評分最低",
-	[Key.animeDateDesc]: "最新發布",
-	[Key.animeDateAsc]: "最早發布",
-	[Key.animeNoResults]: "沒有找到匹配的番劇",
-	[Key.animeLastUpdated]: "數據更新於",
-	[Key.animeSource]: "數據來源",
-	[Key.animeEpStatus]: "進度",
-	[Key.animeViewDetails]: "查看詳情",
-	[Key.animeNotConfigured]: "未配置追番資料來源",
-	[Key.animeNotConfiguredDesc]:
-		"請在 src/config/siteConfig.ts 中配置 Bilibili UID 或 TMDB API Key",
-	[Key.animeBilibiliAvg]: "Bilibili 均分",
-	[Key.animeTmdbAvg]: "TMDB 均分",
-	[Key.animeDualSynced]: "雙源已同步",
-	[Key.animeNoOverview]: "暫無簡介",
-	[Key.animeClose]: "關閉",
-	[Key.animeSynopsis]: "劇情簡介",
-	[Key.animeWatchNow]: "立即觀看",
-	[Key.animeViewTmdb]: "查看 TMDB 詳情",
-	[Key.animeAllWithCount]: "全部 ({count})",
-	[Key.animeTVWithCount]: "TV ({count})",
-	[Key.animeMovieWithCount]: "電影 ({count})",
-	[Key.animeTypeAnime]: "番劇",
-	[Key.animeTypeMovie]: "電影",
-	[Key.animeTypeDocumentary]: "紀錄片",
-	[Key.animeTypeChinese]: "國創",
-	[Key.animeTypeDrama]: "電視劇",
-	[Key.animeTypeConcert]: "演唱會",
+	// VNDB
+
+	// 追番 - Bilibili
+
+	// 追番 - 公共組件
+
+	// MyAnimeList
 
 	// 分頁
 	[Key.paginationFirst]: "首頁",
@@ -218,6 +155,7 @@ export const zh_TW: Translation = {
 	[Key.paginationOf]: "頁，共",
 	[Key.paginationTotal]: "頁，總計",
 	[Key.paginationRecords]: "條記錄",
+	[Key.paginationJump]: "跳轉到指定頁",
 
 	// 404頁面
 	[Key.notFound]: "404",
@@ -243,6 +181,14 @@ export const zh_TW: Translation = {
 	[Key.rssHowToUse]: "推薦使用 Feedly、Inoreader 或其他 RSS 閱讀器來訂閱本站。",
 	[Key.rssCopied]: "RSS 鏈接已複製到剪貼板！",
 	[Key.rssCopyFailed]: "複製失敗，請手動複製鏈接",
+
+	// Atom 頁面
+	[Key.atom]: "Atom 訂閱",
+	[Key.atomDescription]: "訂閱獲取最新更新",
+	[Key.atomSubtitle]: "透過 Atom 訂閱，第一時間獲取最新文章和動態",
+	[Key.atomLink]: "Atom 連結",
+	[Key.atomCopyToReader]: "複製連結到你的 Atom 閱讀器",
+	[Key.atomCopied]: "Atom 連結已複製到剪貼簿！",
 
 	//最後編輯時間卡片
 	[Key.lastModifiedPrefix]: "最後更新於 ",
@@ -271,6 +217,13 @@ export const zh_TW: Translation = {
 	[Key.noRelatedPosts]: "暫無相關文章",
 	[Key.noRandomPosts]: "暫無隨機文章",
 
+	// 文章系列
+	[Key.series]: "系列",
+	[Key.seriesPartOf]: "所屬系列",
+	[Key.seriesPart]: "第 {n} 篇",
+	[Key.seriesThisArticle]: "本文",
+	[Key.noSeries]: "暫無系列",
+
 	// 加密
 	[Key.postEncrypted]: "本文已加密",
 
@@ -278,7 +231,10 @@ export const zh_TW: Translation = {
 	[Key.wallpaperMode]: "壁紙模式",
 	[Key.wallpaperBannerMode]: "橫幅壁紙",
 	[Key.wallpaperFullscreenMode]: "全屏壁紙",
-	[Key.wallpaperOverlayMode]: "全屏透明",
+	[Key.fullscreenLayout]: "全屏佈局",
+	[Key.fullscreenClassicLayout]: "經典模式",
+	[Key.fullscreenHeroLayout]: "Hero 模式",
+	[Key.wallpaperOverlayMode]: "覆蓋透明",
 	[Key.wallpaperNoneMode]: "純色背景",
 
 	// 壁紙設置
@@ -401,6 +357,7 @@ export const zh_TW: Translation = {
 	[Key.galleryAlbums]: "本相簿",
 	[Key.galleryNoAlbums]: "暫無相簿",
 	[Key.galleryBackToAlbums]: "返回相簿列表",
+	[Key.galleryEnterAlbum]: "進入相簿",
 	[Key.searchAlbums]: "搜尋相簿...",
 
 	// 密碼保護
@@ -418,4 +375,11 @@ export const zh_TW: Translation = {
 	[Key.videoPrev]: "上一個影片",
 	[Key.videoNext]: "下一個影片",
 	[Key.videoLoadError]: "影片載入失敗",
+
+	// 沉浸閱讀
+	[Key.immersiveReading]: "沉浸閱讀",
+	[Key.enterImmersiveReading]: "進入沉浸閱讀",
+	[Key.exitImmersiveReading]: "退出沉浸閱讀",
+	[Key.tocExpand]: "展開目錄",
+	[Key.tocCollapse]: "摺疊目錄",
 };

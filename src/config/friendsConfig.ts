@@ -20,7 +20,17 @@ export const friendsPageConfig: FriendsPageConfig = {
 	randomizeSort: false,
 };
 
-// 友链配置（暂未启用）
+// 友链配置
+// 按下面的结构添加友链即可：
+// {
+// 	title: "站点名称",
+// 	imgurl: "头像图片地址",
+// 	desc: "站点描述",
+// 	siteurl: "站点地址",
+// 	tags: ["Blog"],
+// 	weight: 10, // 权重，数字越大排序越靠前
+// 	enabled: true, // 是否启用
+// },
 export const friendsConfig: FriendLink[] = [];
 
 // 获取启用的友链并进行排序

@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-Firefly is an Astro 7 site with Svelte islands and TypeScript configuration. Main source code lives in `src/`: always-on routes in `src/pages`, toggleable feature routes in `src/feature-pages` (injected by the `featurePages` integration in `astro.config.mjs` according to `siteConfig.pages`), layouts in `src/layouts`, reusable UI in `src/components`, styles in `src/styles`, content in `src/content`, helpers in `src/utils`, and Markdown/HTML plugins in `src/plugins`. Site configuration is split across `src/config` with matching type definitions in `src/types`; prefer imports from `@/config` when available. Static files served directly belong in `public`, source-managed images in `src/assets`, docs in `docs` and `Firefly-Docs`, and automation in `scripts`.
+Firefly is an Astro 7 site with Svelte islands and TypeScript configuration. Main source code lives in `src/`: always-on routes in `src/pages`, toggleable feature routes in `src/feature-pages` (injected by the `featurePages` integration in `astro.config.mjs` based on `siteConfig.pages`, so a disabled feature emits neither a page nor a redirect stub), layouts in `src/layouts`, reusable UI in `src/components`, styles in `src/styles`, content in `src/content`, helpers in `src/utils`, and Markdown/HTML plugins in `src/plugins`. Site configuration is split across `src/config` with matching type definitions in `src/types`; prefer imports from `@/config` when available. Static files served directly belong in `public`, source-managed images in `src/assets`, docs in `docs` and `Firefly-Docs`, and automation in `scripts`.
 
 ## Build, Test, and Development Commands
 

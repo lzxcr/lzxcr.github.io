@@ -12,14 +12,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Setup Biome
+        uses: biomejs/setup-biome@f382a98e582959e6aaac8e5f8b17b31749018780 # v2.5.0
         with:
-          run_install: false
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      # 使用项目锁定的 Biome 版本（devDependencies 内的 @biomejs/biome），
-      # 而非 biomejs/setup-biome 的 version: latest —— 后者会随上游发布漂移，
-      # 导致同一份代码在 CI 与本地 pnpm lint 得到不同结果。
+          version: latest
       - name: Run Biome
-        run: pnpm exec biome ci ./src --reporter=github
+        run: biome ci ./src --reporter=github
